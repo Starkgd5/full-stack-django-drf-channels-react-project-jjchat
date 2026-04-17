@@ -1,3 +1,12 @@
-from django.shortcuts import render
+from rest_framework import viewsets
 
-# Create your views here.
+from .models import Server
+
+
+class ServerListViewSet(viewsets.ViewSet):
+    queryset = Server.objects.all()
+
+    def list(self, request):
+        category = request.query_params.get("category")
+        if category:
+            queryset = self.queryset.filter(category=category)
